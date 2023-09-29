@@ -3,67 +3,32 @@ import {
   Image,
   Text,
   Box,
-  FormControl,
-  Input,
-  Button,
   Link,
 } from "native-base";
 import { TouchableOpacity } from "react-native";
 import Logo from "./assets/Logo.png";
+import { Botao } from "./componentes/Botao";
+import { EntradaTexto } from "./componentes/EntradaTexto";
+import { Titulo } from "./componentes/Titulo";
 
 export default function Login() {
   return (
     <VStack flex={1} alignItems="center" justifyContent="center" padding={50}>
       <Image source={Logo} alt="Logo Voll" />
-      <Text
-        fontSize="2xl"
-        fontWeight="bold"
-        color="gray.500"
-        textAlign="center"
-        marginTop={5}
-      >
-        Faça login em sua conta
-      </Text>
+      <Titulo>Faça login em sua conta</Titulo>
       <Box>
-        <FormControl marginTop={3}>
-          <FormControl.Label>E-mail</FormControl.Label>
-          <Input
-            placeholder="Insira seu E-mail"
-            size="lg"
-            width="100%"
-            borderRadius="lg"
-            backgroundColor="gray.100"
-            shadow={3}
-          />
-        </FormControl>
-        <FormControl marginTop={3}>
-          <FormControl.Label>Senha</FormControl.Label>
-          <Input
-            placeholder="Insira sua Senha"
-            size="lg"
-            width="100%"
-            borderRadius="lg"
-            backgroundColor="gray.100"
-            shadow={3}
-          />
-        </FormControl>
+        <EntradaTexto label="E-mail" placeholder="Insira seu E-mail" />
+        <EntradaTexto label="Senha" placeholder="Insira sua Senha" />
       </Box>
-      <Button
-        width="100%"
-        backgroundColor="blue.800"
-        marginTop={10}
-        borderRadius="lg"
-      >
-        Entrar
-      </Button>
-      <Link href="https://www.google.com" color="blue.800">
+      <Botao label="Entrar" />
+      <Link href="https://www.google.com" marginTop={2}>
         Esqueceu a sua senha?
       </Link>
       <Box
         width="100%"
         flexDirection="row"
         justifyContent="center"
-        marginTop={5}
+        marginTop={8}
       >
         <Text>Ainda não tem cadastro?</Text>
         <TouchableOpacity>
