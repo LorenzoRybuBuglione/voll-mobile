@@ -18,7 +18,7 @@ export default function Login({ navigation }) {
           secret={true}
         />
       </Box>
-      <Botao label="Entrar" />
+      <Botao label="Entrar" onPress={() => navigation.navigate("Tabs")} />
       <Link href="https://www.google.com" marginTop={2}>
         Esqueceu a sua senha?
       </Link>
