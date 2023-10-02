@@ -1,10 +1,4 @@
-import {
-  VStack,
-  Image,
-  Text,
-  Box,
-  Link,
-} from "native-base";
+import { VStack, Image, Text, Box, Link } from "native-base";
 import { TouchableOpacity } from "react-native";
 import Logo from "./assets/Logo.png";
 import { Botao } from "./componentes/Botao";
@@ -18,7 +12,11 @@ export default function Login() {
       <Titulo>Faça login em sua conta</Titulo>
       <Box>
         <EntradaTexto label="E-mail" placeholder="Insira seu E-mail" />
-        <EntradaTexto label="Senha" placeholder="Insira sua Senha" />
+        <EntradaTexto
+          label="Senha"
+          placeholder="Insira sua Senha"
+          secret={true}
+        />
       </Box>
       <Botao label="Entrar" />
       <Link href="https://www.google.com" marginTop={2}>

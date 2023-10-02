@@ -3,7 +3,7 @@ import { FormControl, Input } from "native-base";
 interface EntradaTextoProps {
     label: string;
     placeholder: string;
-    secret: boolean;
+    secret?: boolean;
 }
 
 export function EntradaTexto({label, placeholder, secret = false}: EntradaTextoProps) {
