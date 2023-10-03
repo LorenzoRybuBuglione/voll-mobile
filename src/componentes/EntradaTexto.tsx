@@ -1,7 +1,7 @@
 import { FormControl, Input } from "native-base";
 
 interface EntradaTextoProps {
-    label: string;
+    label?: string;
     placeholder: string;
     secret?: boolean;
 }
