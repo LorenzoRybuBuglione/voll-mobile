@@ -25,6 +25,7 @@ export function CardConsulta({
       p={5}
       borderRadius="lg"
       shadow="2"
+      mb={5}
     >
       <VStack flexDir="row">
         <Avatar source={{ uri: foto }} size="lg" />
