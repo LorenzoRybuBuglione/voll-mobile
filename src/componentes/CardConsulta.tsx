@@ -8,6 +8,7 @@ interface CardProps {
   data?: string;
   foiAtendido?: boolean;
   foiAgendado?: boolean;
+  centralizado?: boolean;
 }
 
 export function CardConsulta({
@@ -17,6 +18,7 @@ export function CardConsulta({
   data,
   foiAgendado,
   foiAtendido,
+  centralizado,
 }: CardProps) {
   return (
     <VStack
@@ -27,7 +29,7 @@ export function CardConsulta({
       shadow="2"
       mb={5}
     >
-      <VStack flexDir="row">
+      <VStack flexDir="row" alignSelf={centralizado ? "center" : "flex-start"}>
         <Avatar source={{ uri: foto }} size="lg" />
         <VStack pl={4}>
           <Text fontSize="md" bold>
