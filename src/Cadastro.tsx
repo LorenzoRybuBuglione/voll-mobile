@@ -8,12 +8,15 @@ import { secoes } from "./utils/CadastroEntradasTexto";
 
 export default function Cadastro() {
   const [numSecao, setNumSecao] = useState(0);
-
+  const [dados, setDados] = useState({} as any);
+  const [planos, setPlanos] = useState([] as number[]);
 
   function avancarSecao() {
     if (numSecao < secoes.length - 1) {
       setNumSecao(numSecao + 1);
     } else {
+      console.log(dados);
+      console.log(planos);
     }
   }
 
@@ -24,6 +27,10 @@ export default function Cadastro() {
     }
   }
 
+  function atualizarDados(id: string, valor: string) {
+    setDados({ ...dados, [id]: valor });
+  }
+
   return (
     <ScrollView flex={1} padding={50}>
       <Image source={Logo} alt="Logo Voll" alignSelf="center" />
@@ -32,9 +39,12 @@ export default function Cadastro() {
         {secoes[numSecao].entradaTexto.map((entrada) => {
           return (
             <EntradaTexto
+              key={entrada.label}
               label={entrada.label}
               placeholder={entrada.placeholder}
               secret={entrada.secret}
+              value={dados[entrada.name]}
+              onChangeText={(text) => atualizarDados(entrada.name, text)}
             />
           );
         })}
@@ -47,7 +57,19 @@ export default function Cadastro() {
           </Text>
           {secoes[numSecao].checkbox.map((item) => {
             return (
-              <Checkbox key={item.id} value={item.value}>
+              <Checkbox
+                key={item.id}
+                value={item.value}
+                onChange={() => {
+                  setPlanos((planosAnteriores) => {
+                    if (planosAnteriores.includes(item.id)) {
+                      return planosAnteriores.filter((id) => id !== item.id);
+                    }
+                    return [...planosAnteriores, item.id];
+                  });
+                }}
+                isChecked={planos.includes(item.id)}
+              >
                 {item.value}
               </Checkbox>
             );

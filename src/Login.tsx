@@ -16,6 +16,7 @@ export default function Login({ navigation }) {
   const toast = useToast();
 
   useEffect(() => {
+    // AsyncStorage.removeItem("token");
     async function verificarLogin() {
       const token = await AsyncStorage.getItem("token");
       if (token) {
