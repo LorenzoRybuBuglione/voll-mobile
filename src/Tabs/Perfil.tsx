@@ -39,15 +39,15 @@ export default function Perfil({ navigation }) {
         />
         <Titulo color="blue.500">Informaçōes Pessoais</Titulo>
         <Titulo fontSize="lg" mb={1}>
-          {dadosPaciente.nome}
+          {dadosPaciente?.nome}
         </Titulo>
-        <Text>{dadosPaciente.email}</Text>
-        <Text>{dadosPaciente.endereco?.estado}</Text>
+        <Text>{dadosPaciente?.email}</Text>
+        <Text>{dadosPaciente?.endereco?.estado}</Text>
         <Divider />
         <Titulo color="blue.500" mb={1}>
           Planos de Saúde
         </Titulo>
-        {dadosPaciente.planosSaude?.map((plano, index) => (
+        {dadosPaciente?.planosSaude?.map((plano, index) => (
           <Text key={index}>{plano}</Text>
         ))}
         <Botao label="Deslogar" onPress={deslogar} />
