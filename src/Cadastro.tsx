@@ -4,6 +4,7 @@ import Logo from "./assets/Logo.png";
 import { Botao } from "./componentes/Botao";
 import { EntradaTexto } from "./componentes/EntradaTexto";
 import { Titulo } from "./componentes/Titulo";
+import { cadastrarPaciente } from "./servicos/PacienteServico";
 import { secoes } from "./utils/CadastroEntradasTexto";
 
 export default function Cadastro() {
@@ -15,6 +16,7 @@ export default function Cadastro() {
     if (numSecao < secoes.length - 1) {
       setNumSecao(numSecao + 1);
     } else {
+      cadastrar();
       console.log(dados);
       console.log(planos);
     }
@@ -29,6 +31,29 @@ export default function Cadastro() {
 
   function atualizarDados(id: string, valor: string) {
     setDados({ ...dados, [id]: valor });
+  }
+
+  async function cadastrar() {
+    const resultado = await cadastrarPaciente({
+      cpf: dados.cpf,
+      nome: dados.nome,
+      email: dados.email,
+      endereco: {
+        cep: dados.cep,
+        rua: dados.rua,
+        numero: dados.numero,
+        estado: dados.estado,
+        complemento: dados.complemento,
+      },
+      senha: dados.senha,
+      telefone: dados.telefone,
+      possuiPlanoSaude: planos.length > 0,
+      planosSaude: planos,
+      imagem: dados.imagem,
+    });
+    if (!resultado) {
+      console.log("Erro ao fazer cadastro");
+    }
   }
 
   return (
@@ -85,7 +110,7 @@ export default function Cadastro() {
         />
       )}
       <Botao
-        label="Avançar"
+        label={numSecao == 2 ? "Finalizar" : "Avançar"}
         marginTop={numSecao === 0 ? 10 : 4}
         mb={20}
         onPress={() => avancarSecao()}

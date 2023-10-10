@@ -118,10 +118,6 @@ const secoes = [
         id: 7,
         value: "Outros",
       },
-      {
-        id: 8,
-        value: "Não tenho plano",
-      },
     ],
   },
 ];
