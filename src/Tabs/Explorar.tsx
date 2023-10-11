@@ -10,9 +10,10 @@ interface Especialista {
   nome: string;
   imagem: string;
   especialidade: string;
+  id: string;
 }
 
-export default function Explorar() {
+export default function Explorar({ navigation }) {
   const [estado, setEstado] = useState("");
   const [especialidade, setEspecialidade] = useState("");
   const [resultadoBusca, setResultadoBusca] = useState([]);
@@ -26,6 +27,8 @@ export default function Explorar() {
       console.log(resultado);
     }
   }
+
+  async function agendar() {}
 
   return (
     <ScrollView p={3} flex={1}>
@@ -63,6 +66,11 @@ export default function Explorar() {
             nome={especialista.nome}
             especialidade={especialista.especialidade}
             foto={especialista.imagem}
+            onPress={() =>
+              navigation.navigate("Agendamento", {
+                especialistaID: especialista.id,
+              })
+            }
             centralizado
           />
         </VStack>
