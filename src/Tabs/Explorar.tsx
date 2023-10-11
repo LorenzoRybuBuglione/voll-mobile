@@ -1,10 +1,32 @@
-import { ScrollView, Box } from "native-base";
+import { ScrollView, Box, VStack } from "native-base";
 import { Titulo } from "../componentes/Titulo";
 import { CardConsulta } from "../componentes/CardConsulta";
 import { EntradaTexto } from "../componentes/EntradaTexto";
 import { Botao } from "../componentes/Botao";
+import { useState } from "react";
+import { buscarEspecialistaPorEstado } from "../servicos/EspecialistaServico";
+
+interface Especialista {
+  nome: string;
+  imagem: string;
+  especialidade: string;
+}
 
 export default function Explorar() {
+  const [estado, setEstado] = useState("");
+  const [especialidade, setEspecialidade] = useState("");
+  const [resultadoBusca, setResultadoBusca] = useState([]);
+
+  async function buscar() {
+    if (!estado || !especialidade) return null;
+
+    const resultado = await buscarEspecialistaPorEstado(estado, especialidade);
+    if (resultado) {
+      setResultadoBusca(resultado);
+      console.log(resultado);
+    }
+  }
+
   return (
     <ScrollView p={3} flex={1}>
       <Box
@@ -15,29 +37,36 @@ export default function Explorar() {
         shadow="1"
         borderRightRadius="md"
       >
-        <EntradaTexto placeholder="Digite a especialidade" />
-        <EntradaTexto placeholder="Digite a sua localização" />
-        <Botao label="Buscar" marginTop={3} mb={0} />
+        <EntradaTexto
+          placeholder="Digite a especialidade"
+          value={especialidade}
+          onChangeText={setEspecialidade}
+        />
+        <EntradaTexto
+          placeholder="Digite a sua localização"
+          value={estado}
+          onChangeText={setEstado}
+        />
+        <Botao label="Buscar" marginTop={3} mb={0} onPress={() => buscar()} />
       </Box>
       <Titulo color="blue.500">Resultado da Busca</Titulo>
-      <CardConsulta
-        nome="Dr. André Cunha"
-        especialidade="Cardiologista"
-        foto="https://github.com/LorenzoRybuBuglione.png"
-        centralizado
-      />
-      <CardConsulta
-        nome="Dr. André Cunha"
-        especialidade="Cardiologista"
-        foto="https://github.com/LorenzoRybuBuglione.png"
-        centralizado
-      />
-      <CardConsulta
-        nome="Dr. André Cunha"
-        especialidade="Cardiologista"
-        foto="https://github.com/LorenzoRybuBuglione.png"
-        centralizado
-      />
+
+      {resultadoBusca.map((especialista: Especialista, index) => (
+        <VStack
+          flex={1}
+          w="100%"
+          alignItems="flex-start"
+          bgColor="white"
+          key={index}
+        >
+          <CardConsulta
+            nome={especialista.nome}
+            especialidade={especialista.especialidade}
+            foto={especialista.imagem}
+            centralizado
+          />
+        </VStack>
+      ))}
     </ScrollView>
   );
 }
