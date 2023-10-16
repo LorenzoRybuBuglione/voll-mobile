@@ -19,13 +19,13 @@ interface Consulta {
   especialista: Especialista;
 }
 
-export default function Consultas() {
+export default function Consultas({ navigation }) {
   const [consultasProximas, setConsultasProximas] = useState<Consulta[]>([]);
   const [consultasPassadas, setConsultasPassadas] = useState<Consulta[]>([]);
 
   useEffect(() => {
     async function pegarConsultas() {
-      const pacienteID = AsyncStorage.getItem("pacienteID");
+      const pacienteID = await AsyncStorage.getItem("pacienteID");
       if (!pacienteID) return;
 
       const todasConsultas: Consulta[] = await pegarConsultasPaciente(
@@ -50,12 +50,17 @@ export default function Consultas() {
   return (
     <ScrollView p={3}>
       <Titulo color="blue.500">Minhas Consultas</Titulo>
-      <Botao label="Agendar Nova Consulta" marginTop={5} mb={5} />
+      <Botao
+        label="Agendar Nova Consulta"
+        marginTop={5}
+        mb={5}
+        onPress={() => navigation.navigate("Agendamento")}
+      />
       <Titulo color="blue.500" fontSize="lg" alignSelf="flex-start" mb={2}>
         Próximas Consultas
       </Titulo>
 
-      {consultasProximas?.map((consulta) => {
+      {consultasProximas?.map((consulta) => (
         <CardConsulta
           key={consulta.id}
           nome={consulta?.especialista?.nome}
@@ -63,17 +68,16 @@ export default function Consultas() {
           data={consulta?.data}
           foto={consulta?.especialista?.imagem}
           foiAgendado
-        />;
-      })}
+        />
+      ))}
 
       <Divider mt={5} />
 
       <Titulo color="blue.500" fontSize="lg" alignSelf="flex-start" mb={2}>
         Consultas Passadas
       </Titulo>
-      
 
-      {consultasPassadas?.map((consulta) => {
+      {consultasPassadas?.map((consulta) => (
         <CardConsulta
           key={consulta.id}
           nome={consulta?.especialista?.nome}
@@ -81,8 +85,8 @@ export default function Consultas() {
           data={consulta?.data}
           foto={consulta?.especialista?.imagem}
           foiAtendido
-        />;
-      })}
+        />
+      ))}
     </ScrollView>
   );
 }
