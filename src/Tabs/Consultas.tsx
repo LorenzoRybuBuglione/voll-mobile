@@ -1,10 +1,11 @@
-import { ScrollView, Divider } from "native-base";
+import { ScrollView, Divider, useToast } from "native-base";
 import { useEffect, useState } from "react";
 import { Botao } from "../componentes/Botao";
 import { CardConsulta } from "../componentes/CardConsulta";
 import { Titulo } from "../componentes/Titulo";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { pegarConsultasPaciente } from "../servicos/PacienteServico";
+import { cancelarConsulta } from "../servicos/ConsultaServico";
 
 interface Especialista {
   id: string;
@@ -22,6 +23,7 @@ interface Consulta {
 export default function Consultas({ navigation }) {
   const [consultasProximas, setConsultasProximas] = useState<Consulta[]>([]);
   const [consultasPassadas, setConsultasPassadas] = useState<Consulta[]>([]);
+  const toast = useToast();
 
   useEffect(() => {
     async function pegarConsultas() {
@@ -47,6 +49,17 @@ export default function Consultas({ navigation }) {
     pegarConsultas();
   }, []);
 
+  function cancelar(id) {
+    cancelarConsulta(id);
+    const proximas = consultasProximas.filter((consulta) => consulta.id !== id);
+    setConsultasProximas(proximas);
+    toast.show({
+      title: "Consulta cancelada com sucesso",
+      description: "A sua consulta foi cancelada com sucesso",
+      backgroundColor: "blue.500",
+    });
+  }
+
   return (
     <ScrollView p={3}>
       <Titulo color="blue.500">Minhas Consultas</Titulo>
@@ -68,6 +81,7 @@ export default function Consultas({ navigation }) {
           data={consulta?.data}
           foto={consulta?.especialista?.imagem}
           foiAgendado
+          onPress={() => cancelar(consulta.id)}
         />
       ))}
 
